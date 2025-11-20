@@ -1,4 +1,4 @@
-﻿# web-crawl-service
+# web-crawl-engine
 
 **One-line:** Monolithic web crawler service in Node.js + TypeScript using Redis for URL frontier and MongoDB for persistent page storage.
 
