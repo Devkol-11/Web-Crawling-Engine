@@ -1,6 +1,6 @@
 # web-crawl-engine
 
-**One-line:** Monolithic web crawler service in Node.js + TypeScript using Redis for URL frontier and MongoDB for persistent page storage.
+**One-line:** Monolithic web crawler service in Node.js + TypeScript using Redis for URL frontier and MongoDB for persistent page storage.(Currently in Progress)
 
 ## Goals
 
@@ -25,4 +25,3 @@
 - MongoDB (Mongoose)
 - Autocannon for benchmarking
 
-"src/\*_/_.ts"
