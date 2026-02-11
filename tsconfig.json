@@ -1,17 +1,17 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
-    "rootDir": "src",
-    "outDir": "dist",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "types": ["node"]
-  },
-  "include": ["src", "src/index.d.ts"],
-  "exclude": ["node_modules", "dist"]
+        "compilerOptions": {
+                "target": "ES2022", // To support Top-Level Await features
+                "module": "NodeNext", // To enable Top-Level Await and ES Modules
+                "moduleResolution": "NodeNext", // Required to resolve imports correctly in Node ESM
+                "rootDir": "src",
+                "outDir": "dist",
+                "esModuleInterop": true,
+                "forceConsistentCasingInFileNames": true,
+                "strict": true,
+                "skipLibCheck": true,
+                "resolveJsonModule": true,
+                "types": ["node"]
+        },
+        "include": ["src", "src/index.d.ts"],
+        "exclude": ["node_modules", "dist"]
 }

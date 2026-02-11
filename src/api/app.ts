@@ -2,14 +2,14 @@ import express, { Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
-import { CrawlEngine } from './services/CrawlEngine.js';
-import { HttpClient } from './services/HttpClient.js';
-import { HtmlParser } from './services/HtmlParser.js';
-import { InMemoryFrontier } from './services/InMemoryFrontier.js';
-import { InMemoryPageStore } from './services/InMemoryPageStore.js';
-import { RobotsTxtService } from './services/RobotsTxtService.js';
+import { CrawlEngine } from '../crawler/CrawlEngine.js';
+import { HttpClient } from '../crawler/HttpClient.js';
+import { HtmlParser } from '../crawler/HtmlParser.js';
+import { InMemoryFrontier } from '../frontier/InMemoryFrontier.js';
+import { InMemoryPageStore } from '../storage/InMemoryPageStore.js';
+import { RobotsTxtService } from '../crawler/RobotsTxtService.js';
 import { createCrawlRouter } from './routes/crawl.routes.js';
-import { Logger } from './utils/Logger.js';
+import { Logger } from '../utils/Logger.js';
 
 const logger = Logger.create('App');
 
@@ -22,11 +22,11 @@ const pageStore = new InMemoryPageStore();
 const robotsTxt = new RobotsTxtService(httpClient, 'WebCrawlerBot/1.0');
 
 const crawlEngine = new CrawlEngine({
-        httpClient,
-        htmlParser,
-        frontier,
-        pageStore,
-        robotsTxt
+    httpClient,
+    htmlParser,
+    frontier,
+    pageStore,
+    robotsTxt
 });
 
 // ── Express Application ──────────────────────────────────────
@@ -42,10 +42,10 @@ app.use(morgan('short'));
 // ── Routes ───────────────────────────────────────────────────
 
 app.get('/api/health', (_req: Request, res: Response) => {
-        res.status(200).json({
-                status: 'up',
-                timestamp: new Date().toISOString()
-        });
+    res.status(200).json({
+        status: 'up',
+        timestamp: new Date().toISOString()
+    });
 });
 
 app.use('/api/crawl', createCrawlRouter(crawlEngine));
@@ -53,20 +53,20 @@ app.use('/api/crawl', createCrawlRouter(crawlEngine));
 // ── Global Error Handler ─────────────────────────────────────
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-        logger.error(`Unhandled error: ${err.message}`);
-        res.status(500).json({
-                error: 'Internal server error',
-                message:
-                        process.env.NODE_ENV === 'development'
-                                ? err.message
-                                : undefined
-        });
+    logger.error(`Unhandled error: ${err.message}`);
+    res.status(500).json({
+        error: 'Internal server error',
+        message:
+            process.env.NODE_ENV === 'development'
+                ? err.message
+                : undefined
+    });
 });
 
 // ── 404 Handler ──────────────────────────────────────────────
 
 app.use((_req: Request, res: Response) => {
-        res.status(404).json({ error: 'Not found' });
+    res.status(404).json({ error: 'Not found' });
 });
 
 export { app, crawlEngine };
